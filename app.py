@@ -7,6 +7,6 @@ def hello_world():
 @app.route('/french')
 def french_hello_world():
     return 'Bonjouuuugh'
-@app.route('/version'):
+@app.route('/version')
 def get_version():
     return version
