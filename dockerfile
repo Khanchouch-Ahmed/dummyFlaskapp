@@ -1,10 +1,6 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
-RUN apk --update add bash nano
-ENV STATIC_URL /static
-ENV STATIC_PATH /var/www/app/static
-COPY ./uwsgi.ini /var/www/uwsgi.ini
-COPY ./requirements.txt /var/www/requirements.txt
-COPY ./app/__init__.py /var/www/app/__init__.py
-COPY ./main.py /var/www/main.py
-COPY ./app/views.py /var/www/app/views.py
-RUN pip install -r /var/www/requirements.txt
+FROM python:3
+RUN pip install gunicorn flask
+ADD mainapp.py wsgi.py /app/
+EXPOSE 5000
+WORKDIR /app
+ENTRYPOINT [ "gunicorn","--bind","0.0.0.0:5000","wsgi:app" ]
